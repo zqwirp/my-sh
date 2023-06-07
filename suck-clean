@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Check if this is suckless program source code
+# Check if make file is available
+# Choice between origin or upstream
+
+make clean && rm -f config.h && git reset --hard upstream/master

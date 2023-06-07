@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Check if this is suckless program source code
+# Check if make file is available
+
+make && sudo make install || sudo make clean install

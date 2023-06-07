@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# Set git username
+echo "Please enter your Git username:"
+read -r username
+
+if [[ -z "$username" ]]; then
+    echo "Error: Git username cannot be empty."
+    exit 1
+fi
+
+if ! git config --global user.name "$username"; then
+    echo "Error: Failed to set Git username."
+    exit 1
+fi
+
+echo "Git username set to: $username"
+
+# Set git useremail
+echo "Please enter your Git useremail:"
+read -r useremail
+
+if [[ -z "$useremail" ]]; then
+    echo "Error: Git useremail cannot be empty."
+    exit 1
+fi
+
+if [[ ! "$useremail" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$ ]]; then
+    echo "Error: Invalid email address."
+    exit 1
+fi
+
+if ! git config --global user.email "$useremail"; then
+    echo "Error: Failed to set Git useremail."
+    exit 1
+fi
+
+echo "Git useremail set to: $useremail"
+
+# Set git defaultBranch
+echo "Please enter your Git defaultBranch:"
+read -r defaultBranch
+
+if [[ -z "$defaultBranch" ]]; then
+    echo "Error: Git defaultBranch cannot be empty."
+    exit 1
+fi
+
+if ! git config --global init.defaultBranch "$defaultBranch"; then
+    echo "Error: Failed to set Git defaultBranch."
+    exit 1
+fi
+
+echo "Git defaultBranch set to: $defaultBranch"
