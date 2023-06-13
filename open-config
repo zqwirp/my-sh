@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Define your terminal and editor
+terminal="st"
+editor="vim"
+
+# Define your list of config files
+declare -A config_files
+config_files=(
+  ["vimrc"]="$HOME/.vim/vimrc"
+  ["gitconfig"]="$HOME/.gitconfig"
+  ["bashrc"]="$HOME/.bashrc"
+  # add more files here as needed
+)
+
+# Use dmenu to select a file
+selected_file=$(printf "%s\n" "${!config_files[@]}" | dmenu -i)
+
+# Open the selected file in your terminal with vim
+[[ -n $selected_file ]] && $terminal -e $editor "${config_files[$selected_file]}"
+
