@@ -16,6 +16,12 @@ config_files=(
 # Use dmenu to select a file
 selected_file=$(printf "%s\n" "${!config_files[@]}" | dmenu -i)
 
-# Open the selected file in your terminal with vim
-[[ -n $selected_file ]] && $terminal -e $editor "${config_files[$selected_file]}"
+# Check if script is running from a terminal
+if [ -t 0 ]; then
+  # If it's running from a terminal, open the selected file in the current terminal
+  [[ -n $selected_file ]] && $editor "${config_files[$selected_file]}"
+else
+  # If it's not running from a terminal, open the selected file in a new terminal window
+  [[ -n $selected_file ]] && $terminal -e $editor "${config_files[$selected_file]}"
+fi
 
