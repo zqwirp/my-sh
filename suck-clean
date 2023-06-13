@@ -1,7 +1,22 @@
 #!/usr/bin/env bash
 
-# Check if this is suckless program source code
-# Check if make file is available
-# Choice between origin or upstream
+branch=${1:-upstream/master}
 
-make clean && rm -f config.h && git reset --hard upstream/master
+if [ ! -f "config.def.h" ]; then
+  echo "Error: config.def.h not found. This may not be a Suckless program."
+  exit 1
+fi
+
+if [ ! -f "Makefile" ]; then
+	echo "Error: Makefile not found in current directory."
+	exit 1
+fi
+
+git rev-parse --verify --quiet $branch
+if [ $? -ne 0 ]; then
+	echo "Error: Branch $branch does not exist."
+	exit 1
+fi
+
+make clean && rm -f config.h && git reset --hard $branch
+
