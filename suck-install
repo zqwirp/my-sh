@@ -16,4 +16,4 @@ if [ "$current_branch" != "master" ]; then
   exit 1
 fi
 
-make && sudo make install || sudo make clean install
+make && sudo make install # || sudo make clean install
