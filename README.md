@@ -12,7 +12,7 @@
 > <https://www.gnu.org/software/bash/manual/html_node/Arrays.html>
 >
 
-## Example
+### Example
 
 ```bash
 declare -A name
@@ -27,7 +27,7 @@ name = (
 echo "${!name[@]}" # a b c
 ```
 
-## Spread
+### Spread
 
 ```bash
 ARRAY = ("a" "b" "c" "d" "f" "e")
