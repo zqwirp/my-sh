@@ -24,4 +24,3 @@ else
   # If it's not running from a terminal, open the selected file in a new terminal window
   [[ -n $selected_file ]] && $terminal -e $editor "${config_files[$selected_file]}"
 fi
-

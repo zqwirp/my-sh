@@ -3,8 +3,8 @@
 branch=${1:-upstream/master}
 
 if [ ! -f "config.def.h" ]; then
-  echo "Error: config.def.h not found. This may not be a Suckless program."
-  exit 1
+	echo "Error: config.def.h not found. This may not be a Suckless program."
+	exit 1
 fi
 
 if [ ! -f "Makefile" ]; then
@@ -19,4 +19,3 @@ if [ $? -ne 0 ]; then
 fi
 
 make clean && rm -f config.h && git reset --hard $branch
-

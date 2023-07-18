@@ -17,4 +17,3 @@ if [ "$current_branch" != "master" ]; then
 fi
 
 make && sudo make install || sudo make clean install
-

@@ -5,12 +5,11 @@ CURRENT_DATE=$(date +"%d-%m-%y")
 OUTPUT_DIR=~/Documents/pass-backup_$CURRENT_DATE
 
 # Create the pass-backup directory if it doesn't exist
-mkdir -p $OUTPUT_DIR 
+mkdir -p "$OUTPUT_DIR"
 
 # Copy the .gnupg and .password-store directories to the pass-backup directory
-cp -r ~/.gnupg $OUTPUT_DIR
-cp -r ~/.password-store $OUTPUT_DIR
+cp -r ~/.gnupg "$OUTPUT_DIR"
+cp -r ~/.password-store "$OUTPUT_DIR"
 
 # Export the secret keys to a file with the current date in the pass-backup directory
-gpg --export-secret-keys > $OUTPUT_DIR/secret-key.gpg
-
+gpg --export-secret-keys >"$OUTPUT_DIR"/secret-key.gpg
