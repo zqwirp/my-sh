@@ -1,5 +1,18 @@
 # README
 
+## `dmenu` manual
+
+```text
+-i     dmenu matches menu items case insensitively.
+```
+
+## `bash` conditional
+
+```text
+[[ -n $VAR ]]    string is not empty
+[[ -z $VAR ]]    string is empty
+```
+
 ## Declare
 
 > Associative arrays are created using
