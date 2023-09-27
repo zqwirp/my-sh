@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-URL="$(git remote get-url origin)"
-PATTERN="^https?:\/\/ghp_\w+@github\.com\/.+$"
 ACTION=""
 
 ### check if git has been initialized
 
 set_remote() {
+	URL="$(git remote get-url origin)"
+	PATTERN="^https?:\/\/ghp_\w+@github\.com\/.+$"
 	if [[ $URL =~ $PATTERN ]]; then
 		echo "It's already tokenized"
 	elif [[ $URL =~ "gitlab" ]]; then
@@ -28,10 +28,13 @@ set_identity() {
 	echo "set identity"
 }
 
-while getopts ":a" opt; do
+while getopts ":a:i" opt; do
 	case $opt in
 		a)
 			ACTION="a"
+			;;
+		i)
+			ACTION="i"
 			;;
 		\?)
 			echo "Invalid option: -$OPTARG" >&2
@@ -42,8 +45,16 @@ done
 
 if [ "$ACTION" = "a" ]; then
 	set_identity
+	set_remote
 fi
 
-set_remote
+if [ "$ACTION" = "i" ]; then
+	set_identity
+fi
+
+# Default action when no options are provided (only set_remote)
+if [ -z "$ACTION" ]; then
+	set_remote
+fi
 
 # vim: ts=2 sts=2 sw=2
