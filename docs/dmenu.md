@@ -12,6 +12,10 @@ ls | dmenu -i -l
 
 `-i` matches menu items case **insensitively**.
 
+## `dmenu` script example
+
+- [dmenu](../openconfig)
+
 ## `bash` conditional
 
 ```text
