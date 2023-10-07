@@ -2,8 +2,9 @@
 
 ACTION=""
 
-### check if git has been initialized
+# Need to check if git has been initialized
 
+# Insert token in remote url
 set_remote() {
 	URL="$(git remote get-url origin)"
 	PATTERN="^https?:\/\/ghp_\w+@github\.com\/.+$"
@@ -20,6 +21,7 @@ set_remote() {
 	fi
 }
 
+# Set local identity
 set_identity() {
 	NAME="$(awk -F'=' '/NAME=/{print $2}' ~/.gitcreds)"
 	EMAIL="$(awk -F'=' '/EMAIL=/{print $2}' ~/.gitcreds)"
@@ -52,7 +54,7 @@ if [ "$ACTION" = "i" ]; then
 	set_identity
 fi
 
-# Default action when no options are provided (only set_remote)
+# Default action when no options are provided
 if [ -z "$ACTION" ]; then
 	set_remote
 fi
