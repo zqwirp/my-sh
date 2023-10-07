@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Define your terminal and editor
+# Define terminal and editor
 terminal="st"
 editor="vim"
 
-# Define your list of config files
+# Define list of config files
 declare -A config_files
 config_files=(
   ["vimrc"]="$HOME/.vim/vimrc"
