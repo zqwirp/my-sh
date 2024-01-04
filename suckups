@@ -10,13 +10,11 @@ if [ ! -f "Makefile" ]; then
 	exit 1
 fi
 
-branch=${1:-upstream/master}
-
-git rev-parse --verify --quiet $branch
-
-if [ $? -ne 0 ]; then
-	echo "Error: Branch $branch does not exist."
+if git remote get-url upstream &> /dev/null; then
+	echo "Branch upstream url exists."
 	exit 1
 fi
 
-make clean && rm -f config.h && git reset --hard $branch
+read -p "program name: " name
+
+git remote add upstream git://git.suckless.org/$name

@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-ACTION=""
-
-# Need to check if git has been initialized
-
-# Insert token in remote url
 set_remote() {
 	URL="$(git remote get-url origin)"
 	PATTERN="^https?:\/\/ghp_\w+@github\.com\/.+$"
@@ -21,7 +16,6 @@ set_remote() {
 	fi
 }
 
-# Set local identity
 set_identity() {
 	NAME="$(awk -F'=' '/NAME=/{print $2}' ~/.gitcreds)"
 	EMAIL="$(awk -F'=' '/EMAIL=/{print $2}' ~/.gitcreds)"
@@ -30,32 +24,12 @@ set_identity() {
 	echo "set identity"
 }
 
-while getopts ":a:i" opt; do
-	case $opt in
-		a)
-			ACTION="a"
-			;;
-		i)
-			ACTION="i"
-			;;
-		\?)
-			echo "Invalid option: -$OPTARG" >&2
-			exit 1
-			;;
-	esac
-done
-
-if [ "$ACTION" = "a" ]; then
+if [ "$1" = "-a" ]; then
 	set_identity
 	set_remote
-fi
-
-if [ "$ACTION" = "i" ]; then
+elif [ "$1" = "-i" ]; then
 	set_identity
-fi
-
-# Default action when no options are provided
-if [ -z "$ACTION" ]; then
+else
 	set_remote
 fi
 

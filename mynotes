@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/.notes"
+NOTE="$DIR/$(ls $DIR | dmenu)"
+
+open_with_zenity() {
+	zenity --text-info --filename=$1 \
+		--width=800 --height=600 \
+		--font='Source Code Pro'
+}
+
+open_with_zenity $NOTE
