@@ -1,36 +1,58 @@
 #!/usr/bin/env bash
 
+FLAG_A=false
+FLAG_I=false
+
 set_remote() {
-	URL="$(git remote get-url origin)"
-	PATTERN="^https?:\/\/ghp_\w+@github\.com\/.+$"
-	if [[ $URL =~ $PATTERN ]]; then
-		echo "It's already tokenized"
-	elif [[ $URL =~ "gitlab" ]]; then
+	remote_url=$(git remote get-url origin)
+	if [[ $remote_url =~ ^https:?\/\/ghp_.+?@github\.com\/.+$ ]]; then
+		read -r -p "It's already tokenized, do you want to replace it? (y)" replace
+		if [ "$replace" == 'y' ]; then
+			token=$(awk -F = '/TOKEN/ {print $2}' "$HOME/.gitcreds")
+			new_url="https://$token@${remote_url//[^@]*@/}"
+			git remote set-url origin "$new_url"
+			echo "set url to $new_url"
+		fi
+		exit 0
+	elif [[ $remote_url =~ "gitlab" ]]; then
 		echo "It's freakin gitlab, it's different"
+		exit 1
 	else
-		token="$(awk -F'=' '/TOKEN=/{print $2}' ~/.gitcreds)"
+		token=$(awk -F = '/TOKEN/ {print $2}' "$HOME/.gitcreds")
 		match="github"
-		new_url="${URL%%${match}*}$token@${match}${URL##*${match}}"
-		git remote set-url origin $new_url
+		new_url="${remote_url%%"$match"*}$token@${match}${remote_url##*"$match"}"
+		git remote set-url origin "$new_url"
 		echo "set url to $new_url"
 	fi
 }
 
 set_identity() {
-	NAME="$(awk -F'=' '/NAME=/{print $2}' ~/.gitcreds)"
-	EMAIL="$(awk -F'=' '/EMAIL=/{print $2}' ~/.gitcreds)"
-	git name $NAME
-	git email $EMAIL
+	name=$(awk -F = '/NAME/ {print $2}' "$HOME/.gitcreds")
+	email=$(awk -F = '/EMAIL/ {print $2}' "$HOME/.gitcreds")
+	git name "$name"
+	git email "$email"
+	echo "$name"
+	echo "$email"
 	echo "set identity"
 }
 
-if [ "$1" = "-a" ]; then
+while getopts ":ai" option; do
+	case "$option" in
+		a)
+			FLAG_A=true
+			;;
+		i)
+			FLAG_I=true
+			;;
+		\?)
+			exit 1
+			;;
+	esac
+done
+
+if [[ "$FLAG_I" == true || "$FLAG_A" == true ]]; then
 	set_identity
-	set_remote
-elif [ "$1" = "-i" ]; then
-	set_identity
-else
-	set_remote
+	FLAG_I && exit 0
 fi
 
-# vim: ts=2 sts=2 sw=2
+set_remote

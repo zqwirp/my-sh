@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIR="$HOME/.notes"
+DIR="$HOME/.local/my-notes"
 NOTE="$DIR/$(ls $DIR | dmenu)"
 
 open_with_zenity() {
